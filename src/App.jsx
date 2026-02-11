@@ -856,32 +856,102 @@
 // }
 // export default App;
 
-import React, {useEffect, useState} from "react";
+// import React, {useEffect, useState} from "react";
+// const App = () => {
+//     const[product, setProduct] = useState([])
+//     async function fetchData(){
+//         const response = await fetch("https://fakestoreapi.com/products")
+//         const data = await response.json()
+//         setProduct(data)
+//     }
+
+//     useEffect(()=>{
+//         fetchData()
+//     }, [])
+
+//     return(
+//         <div>
+//             <h1>Products</h1>
+//             {
+//                 product.map((item)=>(
+//                 <div>
+//                     <h1>{item.title}</h1>
+//                     <h1>${item.price}</h1>
+//                     <img src={item.image} alt={item.title}></img>
+//                 </div>
+//                 ))
+//             }
+//         </div>
+//     )
+// }
+// export default App;
+
+
+import React, { useEffect, useState } from "react";
+import "./App.css";
+
 const App = () => {
-    const[product, setProduct] = useState([])
-    async function fetchData(){
-        const response = await fetch("https://fakestoreapi.com/products")
-        const data = await response.json()
-        setProduct(data)
-    }
 
-    useEffect(()=>{
-        fetchData()
-    }, [])
+  const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState("");
+  const [cart, setCart] = useState([]);
 
-    return(
-        <div>
-            <h1>Products</h1>
-            {
-                product.map((item)=>(
-                <div>
-                    <h1>{item.title}</h1>
-                    <h1>${item.price}</h1>
-                    <img src={item.image} alt={item.title}></img>
-                </div>
-                ))
-            }
+  // Fetch Fake Store API
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then(res => res.json())
+      .then(data => setProducts(data));
+  }, []);
+
+  // Add to cart
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+  };
+
+  // Filter products based on search
+  const filteredProducts = products.filter((item) =>
+    item.title.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="container">
+
+      {/* Navbar */}
+      <nav className="navbar">
+        <h1>🛍️ MyStore</h1>
+
+        <input
+          type="text"
+          placeholder="Search products..."
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+        <div className="cart">
+          🛒 Cart: <span>{cart.length}</span>
         </div>
-    )
-}
+      </nav>
+
+      {/* Product Grid */}
+      <div className="grid">
+        {filteredProducts.map((product) => (
+          <div className="card" key={product.id}>
+
+            <img src={product.image} alt={product.title} />
+
+            <h3>{product.title.substring(0, 40)}...</h3>
+
+            <p className="price">${product.price}</p>
+
+            <button onClick={() => addToCart(product)}>
+              Add to Cart
+            </button>
+
+          </div>
+        ))}
+      </div>
+
+    </div>
+  );
+};
+
 export default App;
