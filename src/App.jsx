@@ -887,71 +887,168 @@
 // export default App;
 
 
-import React, { useEffect, useState } from "react";
-import "./App.css";
+// import React, { useEffect, useState } from "react";
+// import "./App.css";
 
-const App = () => {
+// const App = () => {
 
-  const [products, setProducts] = useState([]);
-  const [search, setSearch] = useState("");
-  const [cart, setCart] = useState([]);
+//   const [products, setProducts] = useState([]);
+//   const [search, setSearch] = useState("");
+//   const [cart, setCart] = useState([]);
 
-  // Fetch Fake Store API
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then(res => res.json())
-      .then(data => setProducts(data));
-  }, []);
+//   // Fetch Fake Store API
+//   useEffect(() => {
+//     fetch("https://fakestoreapi.com/products")
+//       .then(res => res.json())
+//       .then(data => setProducts(data));
+//   }, []);
 
-  // Add to cart
-  const addToCart = (product) => {
-    setCart([...cart, product]);
+//   // Add to cart
+//   const addToCart = (product) => {
+//     setCart([...cart, product]);
+//   };
+
+//   // Filter products based on search
+//   const filteredProducts = products.filter((item) =>
+//     item.title.toLowerCase().includes(search.toLowerCase())
+//   );
+
+//   return (
+//     <div className="container">
+
+//       {/* Navbar */}
+//       <nav className="navbar">
+//         <h1>🛍️ MyStore</h1>
+
+//         <input
+//           type="text"
+//           placeholder="Search products..."
+//           onChange={(e) => setSearch(e.target.value)}
+//         />
+
+//         <div className="cart">
+//           🛒 Cart: <span>{cart.length}</span>
+//         </div>
+//       </nav>
+
+//       {/* Product Grid */}
+//       <div className="grid">
+//         {filteredProducts.map((product) => (
+//           <div className="card" key={product.id}>
+
+//             <img src={product.image} alt={product.title} />
+
+//             <h3>{product.title.substring(0, 40)}...</h3>
+
+//             <p className="price">${product.price}</p>
+
+//             <button onClick={() => addToCart(product)}>
+//               Add to Cart
+//             </button>
+
+//           </div>
+//         ))}
+//       </div>
+
+//     </div>
+//   );
+// };
+
+// export default App;
+
+import React from "react"
+import { useState } from "react"
+import "./App.css"
+function App(){
+  const[input,setInput] = useState("")
+  const[data,setData] = useState(null)
+  var API_Key = "cb03340574335c2f1266fe7437c2e952"
+
+  const getWeather = async()=>{
+    if(input==="") return;
+
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=${API_Key}&units=metric`
+
+    );
+
+    const result = await response.json();
+    setData(result)
   };
 
-  // Filter products based on search
-  const filteredProducts = products.filter((item) =>
-    item.title.toLowerCase().includes(search.toLowerCase())
-  );
+ return (
+  <div className="app">
 
-  return (
-    <div className="container">
+    {/* HERO SECTION */}
 
-      {/* Navbar */}
-      <nav className="navbar">
-        <h1>🛍️ MyStore</h1>
+    <div className="hero">
 
+      <div className="searchBar">
         <input
-          type="text"
-          placeholder="Search products..."
-          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search city..."
+          onChange={(e)=>setInput(e.target.value)}
         />
-
-        <div className="cart">
-          🛒 Cart: <span>{cart.length}</span>
-        </div>
-      </nav>
-
-      {/* Product Grid */}
-      <div className="grid">
-        {filteredProducts.map((product) => (
-          <div className="card" key={product.id}>
-
-            <img src={product.image} alt={product.title} />
-
-            <h3>{product.title.substring(0, 40)}...</h3>
-
-            <p className="price">${product.price}</p>
-
-            <button onClick={() => addToCart(product)}>
-              Add to Cart
-            </button>
-
-          </div>
-        ))}
+        <button onClick={getWeather}>Search</button>
       </div>
 
-    </div>
-  );
-};
+      {data && data.main && (
+        <div className="heroWeather">
 
+          <h1>{data.name}</h1>
+          <h2>{Math.round(data.main.temp)}°</h2>
+          <p>{data.weather[0].main}</p>
+
+        </div>
+      )}
+
+    </div>
+
+    {/* FORECAST ROW */}
+
+    <div className="forecastRow">
+      <div className="day">Mon 27°</div>
+      <div className="day">Tue 25°</div>
+      <div className="day">Wed 28°</div>
+      <div className="day">Thu 26°</div>
+      <div className="day">Fri 29°</div>
+    </div>
+
+    {/* TWO CARD SECTION */}
+
+    {data && data.main && (
+      <div className="cardsSection">
+
+        <div className="leftCard">
+
+          <h3>Today Details</h3>
+
+          <div className="info">
+            <p>Humidity</p>
+            <span>{data.main.humidity}%</span>
+          </div>
+
+          <div className="info">
+            <p>Wind</p>
+            <span>{data.wind.speed} m/s</span>
+          </div>
+
+          <div className="info">
+            <p>Feels Like</p>
+            <span>{Math.round(data.main.feels_like)}°</span>
+          </div>
+
+        </div>
+
+        <div className="rightCard">
+          <h3>Hourly Forecast</h3>
+          <div className="chartPlaceholder"></div>
+        </div>
+
+      </div>
+    )}
+
+  </div>
+);
+
+}
 export default App;
