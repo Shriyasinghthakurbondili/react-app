@@ -956,32 +956,32 @@
 
 // export default App;
 
-import React from "react"
-import { useState } from "react"
-import "./App.css"
-function App(){
-  const[input,setInput] = useState("")
-  const[data,setData] = useState(null)
-  var API_Key = "cb03340574335c2f1266fe7437c2e952"
+// import React from "react"
+// import { useState } from "react"
+// import "./App.css"
+// function App(){
+//   const[input,setInput] = useState("")
+//   const[data,setData] = useState(null)
+//   var API_Key = "cb03340574335c2f1266fe7437c2e952"
 
-  const getWeather = async()=>{
-    if(input==="") return;
+//   const getWeather = async()=>{
+//     if(input==="") return;
 
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=${API_Key}&units=metric`
+//     const response = await fetch(
+//       `https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=${API_Key}&units=metric`
 
-    );
+//     );
 
-    const result = await response.json();
-    setData(result)
-  };
+//     const result = await response.json();
+//     setData(result)
+//   };
 
- return (
-  <div className="app">
+//  return (
+//   <div className="app">
 
     {/* HERO SECTION */}
 
-    <div className="hero">
+    {/* <div className="hero">
 
       <div className="searchBar">
         <input
@@ -1001,20 +1001,20 @@ function App(){
         </div>
       )}
 
-    </div>
+    </div> */}
 
     {/* FORECAST ROW */}
 
-    <div className="forecastRow">
+    {/* <div className="forecastRow">
       <div className="day">Mon 27°</div>
       <div className="day">Tue 25°</div>
       <div className="day">Wed 28°</div>
       <div className="day">Thu 26°</div>
       <div className="day">Fri 29°</div>
-    </div>
+    </div> */}
 
     {/* TWO CARD SECTION */}
-
+{/* 
     {data && data.main && (
       <div className="cardsSection">
 
@@ -1050,5 +1050,248 @@ function App(){
   </div>
 );
 
+}
+export default App; */}
+
+// import React, {useEffect, useState} from 'react'
+// import { Toaster, toast } from 'react-hot-toast'
+// const App = () => {
+//   const [title,setTitle] = useState("")
+//   const [description, setDescription] = useState("")
+//   const [blogs, setBlogs] = useState([])
+   
+//   const newBlog = {
+//     title : "tilte",
+//     description : "description"
+//   }
+ 
+//   async function createBlog(){
+//     if(!title || !description){
+//       toast.error("Please fill the fields")
+//       return
+//     }
+//   const response = await fetch("https://698ecbe2aded595c2532d22d.mockapi.io/blogs", {
+//     method:"post",
+//     headers:{
+//       "Content-Type" : "application/json"
+//     },
+//     body: JSON.stringify(newBlog)
+//   })
+  
+//   if(response.ok){
+//     toast.success("Blog created successfully")
+//     fetchData()
+//     setTitle("")
+//     setDescription("")
+//   }
+//   else{
+//     toast.error("Failed to create the Blog")
+//     }
+//   }
+
+//   async function fetchData(){
+//     const result = await fetch("https://698ecbe2aded595c2532d22d.mockapi.io/blogs")
+//     const jsonResult = await result.json()
+//     setBlogs(jsonResult)
+//   }
+
+//   useEffect(()=>{
+//     fetchData()
+//   }, [])
+
+//   async function deleteBlog(blogitem){
+//       const deleteBlog = await fetch("https://698ecbe2aded595c2532d22d.mockapi.io/blogs/${blogitem}",{
+//             method: "delete",
+//         })
+//         if(deleteBlog.ok){
+//           toast.success("Blog deleted successfully")
+//         }
+//         else{
+//           toast.error("Fail to delete")
+//         }
+
+//   }
+
+//   async function updatedBlog(updateditem){
+//     const newTitle = prompt("Enter new Title:")
+//     const newDescription = prompt("Enter new Description:")
+
+//     const updatedblog = {
+//       title: newTitle,
+//       description : newDescription
+//     }
+
+//     const blogUpdated = await fetch("https://698ecbe2aded595c2532d22d.mockapi.io/blogs/${updatItem.id",{
+//       method:"Put",
+//       headers:{
+//            "Content-Type" : "application/json"
+//       },
+//       body: JSON.stringify("updatedBlog")
+//     })
+
+//     if(updatedBlog.ok){
+//       toast.success("Blog Updated successfully")
+//       fetchData()
+//     }
+//     else{
+//       toast.error("Failed to updated")
+//     }
+//   }
+
+//   return(
+//     <div>
+//       <Toaster/>
+//       <label htmlFor=''>Enter the title:</label>
+//       <input value={title} onChange={(e)=>{setTitle(e.target.value)}}type="text"></input>
+//       <label htloFor=''>Enter the description:</label>
+//       <input value={description} onChange={(e)=>{setDescription(e.target.value)}}type='text'></input>
+//       <button onClick={createBlog}>Create Blog</button>
+
+//       <div>
+//         {
+//           blogs.map((item)=>{
+//             <div key={item.id}>
+//               <h1>{item.title}</h1>
+//               <p>{item.description}</p>
+
+//               <div>
+//                 <button onClick={()=>updatedBlog(item)}>Update</button>
+//               </div>
+
+//               <div>
+//                 <button onClick={()=>deleteBlog(item)}></button>
+//               </div>
+//             </div>
+//           })
+//         }
+//       </div>
+//     </div>
+//   )
+// }
+// export default App;   
+
+
+import React, { useEffect, useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
+import "./App.css"
+const App = () =>{
+  const [title,setTitle] = useState("")
+  const [description,setDescription] = useState("")
+  const [blog,setBlog] = useState([])
+
+  const newBlog = {
+    title : title,
+    description : description
+  }
+
+  // console.log(blog)
+ async function createBlog(){
+    if(!title||!description){
+      toast.error("Please fill the fields")
+      return 
+    }
+   const response = await fetch("https://698ecbe2aded595c2532d22d.mockapi.io/blogs",{
+    method : "post",
+    headers:{
+      "Content-Type" : "application/json"
+    },
+    body: JSON.stringify(newBlog)
+   })
+
+   if(response.ok){
+    toast.success("Blog is created successfully")
+    fetchData()
+    setTitle("")
+    setDescription("")
+    
+   }
+   else{
+    toast.error("Failed to create the blog")
+   }
+ }
+
+ async function fetchData(){
+  const result = await fetch("https://698ecbe2aded595c2532d22d.mockapi.io/blogs")
+  const jsonResult = await result.json()
+  // setBlog(jsonResult)
+  setBlog(jsonResult.reverse())
+ }
+
+ useEffect(()=>{
+  fetchData()
+ }, [])
+
+ async function deleteBlog(blogitem){
+  const response = await fetch(`https://698ecbe2aded595c2532d22d.mockapi.io/blogs/${blogitem.id}`,{
+    method : "delete",
+  })
+
+  if(response.ok){
+    toast.success("Blog deleted successfully")
+    fetchData()
+  }
+  else{
+    toast.error("Fail to delete")
+    
+  }
+ }
+
+ async function updatedBlog(updateitem){
+  const newTitle = prompt("Enter title:")
+  const newDescription = prompt("Enter description:")
+
+  const updatedBlog = {
+    title:newTitle,
+    description:newDescription
+  }
+  const blogUpdated = await fetch(`https://698ecbe2aded595c2532d22d.mockapi.io/blogs/${updateitem.id}`,{
+       method : "put",
+       headers: {
+        "Content-Type" : "application/json"
+       },
+       body: JSON.stringify(updatedBlog)
+  })
+  if(blogUpdated.ok){
+    toast.success("Blog updated")
+    fetchData()
+  }
+  else{
+    toast.error("Failed to updated the blog")
+  }
+ }
+  return(
+    <div className="app">
+      <Toaster />
+      <div className="container">
+        <h1 className="heading">Premium Blog App</h1>
+        <div className="form-card">
+          <label htmlFor="">Enter The Title:</label>
+          <input value={title} type="text" onChange={(e)=>{setTitle(e.target.value)}}></input>
+          <label htmlFor="">Enter The Description:</label>
+          <input value={description} type="text" onChange={(e)=>{setDescription(e.target.value)}}></input>
+          <button className="create-btn" onClick={createBlog}>Create Blog</button>
+        </div>
+      <div className="blog-list">  
+      {
+        blog.map((item)=>(
+          <div key={item.id} className="blog-card">
+            <h1>{item.title}</h1>
+            <p>{item.description}</p>
+
+            <div className="btn-group">
+              <button className="update-btn" onClick={()=>updatedBlog(item)}>Update</button>
+            </div>
+            <div>
+              <button className="delete-btn" onClick={()=>deleteBlog(item)}>Delete</button>
+            </div>
+          </div>
+
+          
+        ))
+      }
+    </div>
+  </div>
+  </div>  
+  )
 }
 export default App;
