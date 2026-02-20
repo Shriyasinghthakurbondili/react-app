@@ -1171,127 +1171,380 @@ export default App; */}
 // export default App;   
 
 
-import React, { useEffect, useState } from "react";
-import { Toaster, toast } from "react-hot-toast";
-import "./App.css"
-const App = () =>{
-  const [title,setTitle] = useState("")
-  const [description,setDescription] = useState("")
-  const [blog,setBlog] = useState([])
+// import React, { useEffect, useState } from "react";
+// import { Toaster, toast } from "react-hot-toast";
+// import "./App.css"
+// const App = () =>{
+//   const [title,setTitle] = useState("")
+//   const [description,setDescription] = useState("")
+//   const [blog,setBlog] = useState([])
 
-  const newBlog = {
-    title : title,
-    description : description
-  }
+//   const newBlog = {
+//     title : title,
+//     description : description
+//   }
 
   // console.log(blog)
- async function createBlog(){
-    if(!title||!description){
-      toast.error("Please fill the fields")
-      return 
-    }
-   const response = await fetch("https://698ecbe2aded595c2532d22d.mockapi.io/blogs",{
-    method : "post",
-    headers:{
-      "Content-Type" : "application/json"
-    },
-    body: JSON.stringify(newBlog)
-   })
+//  async function createBlog(){
+//     if(!title||!description){
+//       toast.error("Please fill the fields")
+//       return 
+//     }
+//    const response = await fetch("https://698ecbe2aded595c2532d22d.mockapi.io/blogs",{
+//     method : "post",
+//     headers:{
+//       "Content-Type" : "application/json"
+//     },
+//     body: JSON.stringify(newBlog)
+//    })
 
-   if(response.ok){
-    toast.success("Blog is created successfully")
-    fetchData()
-    setTitle("")
-    setDescription("")
+//    if(response.ok){
+//     toast.success("Blog is created successfully")
+//     fetchData()
+//     setTitle("")
+//     setDescription("")
     
-   }
-   else{
-    toast.error("Failed to create the blog")
-   }
- }
+//    }
+//    else{
+//     toast.error("Failed to create the blog")
+//    }
+//  }
 
- async function fetchData(){
-  const result = await fetch("https://698ecbe2aded595c2532d22d.mockapi.io/blogs")
-  const jsonResult = await result.json()
-  // setBlog(jsonResult)
-  setBlog(jsonResult.reverse())
- }
+//  async function fetchData(){
+//   const result = await fetch("https://698ecbe2aded595c2532d22d.mockapi.io/blogs")
+//   const jsonResult = await result.json()
+//   // setBlog(jsonResult)
+//   setBlog(jsonResult.reverse())
+//  }
 
- useEffect(()=>{
-  fetchData()
- }, [])
+//  useEffect(()=>{
+//   fetchData()
+//  }, [])
 
- async function deleteBlog(blogitem){
-  const response = await fetch(`https://698ecbe2aded595c2532d22d.mockapi.io/blogs/${blogitem.id}`,{
-    method : "delete",
-  })
+//  async function deleteBlog(blogitem){
+//   const response = await fetch(`https://698ecbe2aded595c2532d22d.mockapi.io/blogs/${blogitem.id}`,{
+//     method : "delete",
+//   })
 
-  if(response.ok){
-    toast.success("Blog deleted successfully")
-    fetchData()
-  }
-  else{
-    toast.error("Fail to delete")
+//   if(response.ok){
+//     toast.success("Blog deleted successfully")
+//     fetchData()
+//   }
+//   else{
+//     toast.error("Fail to delete")
     
-  }
- }
+//   }
+//  }
 
- async function updatedBlog(updateitem){
-  const newTitle = prompt("Enter title:")
-  const newDescription = prompt("Enter description:")
+//  async function updatedBlog(updateitem){
+//   const newTitle = prompt("Enter title:")
+//   const newDescription = prompt("Enter description:")
 
-  const updatedBlog = {
-    title:newTitle,
-    description:newDescription
+//   const updatedBlog = {
+//     title:newTitle,
+//     description:newDescription
+//   }
+//   const blogUpdated = await fetch(`https://698ecbe2aded595c2532d22d.mockapi.io/blogs/${updateitem.id}`,{
+//        method : "put",
+//        headers: {
+//         "Content-Type" : "application/json"
+//        },
+//        body: JSON.stringify(updatedBlog)
+//   })
+//   if(blogUpdated.ok){
+//     toast.success("Blog updated")
+//     fetchData()
+//   }
+//   else{
+//     toast.error("Failed to updated the blog")
+//   }
+//  }
+//   return(
+//     <div className="app">
+//       <Toaster />
+//       <div className="container">
+//         <h1 className="heading">Premium Blog App</h1>
+//         <div className="form-card">
+//           <label htmlFor="">Enter The Title:</label>
+//           <input value={title} type="text" onChange={(e)=>{setTitle(e.target.value)}}></input>
+//           <label htmlFor="">Enter The Description:</label>
+//           <input value={description} type="text" onChange={(e)=>{setDescription(e.target.value)}}></input>
+//           <button className="create-btn" onClick={createBlog}>Create Blog</button>
+//         </div>
+//       <div className="blog-list">  
+//       {
+//         blog.map((item)=>(
+//           <div key={item.id} className="blog-card">
+//             <h1>{item.title}</h1>
+//             <p>{item.description}</p>
+
+//             <div className="btn-group">
+//               <button className="update-btn" onClick={()=>updatedBlog(item)}>Update</button>
+//             </div>
+//             <div>
+//               <button className="delete-btn" onClick={()=>deleteBlog(item)}>Delete</button>
+//             </div>
+//           </div>
+
+          
+//         ))
+//       }
+//     </div>
+//   </div>
+//   </div>  
+//   )
+// }
+// export default App;
+import React, { useEffect, useState } from "react";
+import { FaShoppingCart, FaSearch, FaUser } from "react-icons/fa";
+import AuthPage from "./AuthPage";
+import "./App.css";
+
+const App = () => {
+
+  // ================= AUTH =================
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // ================= STATES =================
+  const [data, setData] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [search, setSearch] = useState("");
+  const [cart, setCart] = useState([]);
+  const [showCart, setShowCart] = useState(false);
+
+  // ================= FETCH DATA =================
+  async function fetchData() {
+    const res = await fetch("https://fakestoreapi.com/products");
+    const json = await res.json();
+    setData(json);
   }
-  const blogUpdated = await fetch(`https://698ecbe2aded595c2532d22d.mockapi.io/blogs/${updateitem.id}`,{
-       method : "put",
-       headers: {
-        "Content-Type" : "application/json"
-       },
-       body: JSON.stringify(updatedBlog)
-  })
-  if(blogUpdated.ok){
-    toast.success("Blog updated")
-    fetchData()
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // ================= CART =================
+  function addToCart(product) {
+    setCart([...cart, product]);
   }
-  else{
-    toast.error("Failed to updated the blog")
+
+  function removeFromCart(id) {
+    const updated = cart.filter((item) => item.id !== id);
+    setCart(updated);
   }
- }
-  return(
+
+  // ================= SEARCH =================
+  const filteredData = data.filter((item) =>
+    item.title.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // ================= TOTAL =================
+  const totalPrice = cart.reduce((acc, item) => acc + item.price, 0);
+
+  // ================= AUTH CHECK =================
+  if (!isAuthenticated) {
+    return <AuthPage setIsAuthenticated={setIsAuthenticated} />;
+  }
+
+  // ================= UI =================
+  return (
     <div className="app">
-      <Toaster />
-      <div className="container">
-        <h1 className="heading">Premium Blog App</h1>
-        <div className="form-card">
-          <label htmlFor="">Enter The Title:</label>
-          <input value={title} type="text" onChange={(e)=>{setTitle(e.target.value)}}></input>
-          <label htmlFor="">Enter The Description:</label>
-          <input value={description} type="text" onChange={(e)=>{setDescription(e.target.value)}}></input>
-          <button className="create-btn" onClick={createBlog}>Create Blog</button>
-        </div>
-      <div className="blog-list">  
-      {
-        blog.map((item)=>(
-          <div key={item.id} className="blog-card">
-            <h1>{item.title}</h1>
-            <p>{item.description}</p>
 
-            <div className="btn-group">
-              <button className="update-btn" onClick={()=>updatedBlog(item)}>Update</button>
+      {/* ================= HEADER ================= */}
+      <header className="header">
+
+        <h2 className="logo">MyStore</h2>
+
+        <div className="header-right">
+
+          {/* SEARCH */}
+          <div className="search-box">
+            <FaSearch />
+            <input
+              value={search}
+              type="text"
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search products..."
+            />
+          </div>
+
+          {/* ACCOUNT DROPDOWN */}
+          <div className="account-box">
+
+            <div className="account-text">
+              <span className="small">Hello, sign in</span>
+              <span className="bold">Account & Lists ▾</span>
             </div>
-            <div>
-              <button className="delete-btn" onClick={()=>deleteBlog(item)}>Delete</button>
+
+            <div className="dropdown">
+              <button className="signin-btn">Sign In</button>
+
+              <div className="dropdown-content">
+                <div>
+                  <h4>Your Lists</h4>
+                  <p>Create a Wish List</p>
+                  <p>Baby Wishlist</p>
+                  <p>Discover your style</p>
+                </div>
+
+                <div>
+                  <h4>Your Account</h4>
+                  <p>Your Orders</p>
+                  <p>Your Wishlist</p>
+                  <p>Your Recommendations</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          
-        ))
-      }
+          {/* ORDERS */}
+          <div className="nav-item">
+            <p className="small">Returns</p>
+            <p className="bold">& Orders</p>
+          </div>
+
+          {/* CART */}
+          <button
+            className="cart-btn"
+            onClick={() => setShowCart(true)}
+          >
+            <FaShoppingCart /> Cart ({cart.length})
+          </button>
+
+          {/* USER ICON */}
+          <button className="user-btn">
+            <FaUser />
+          </button>
+
+        </div>
+      </header>
+
+      {/* ================= CART MODAL ================= */}
+      {showCart && (
+        <div className="overlay" onClick={() => setShowCart(false)}>
+
+          <div
+            className="cart-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2>Shopping Cart</h2>
+
+            {cart.length === 0 ? (
+              <p>No items in cart</p>
+            ) : (
+              <>
+                {cart.map((item) => (
+                  <div key={item.id} className="cart-item">
+                    <p>{item.title}</p>
+                    <span>${item.price}</span>
+
+                    <button onClick={() => removeFromCart(item.id)}>
+                      Remove
+                    </button>
+                  </div>
+                ))}
+
+                <h3>Total: ${totalPrice.toFixed(2)}</h3>
+              </>
+            )}
+
+            <div className="cart-actions">
+              <button onClick={() => setShowCart(false)}>
+                Close
+              </button>
+
+              <button className="checkout-btn">
+                Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= PRODUCT SECTION ================= */}
+      {selectedItem ? (
+
+        <div className="product-details">
+
+          <img src={selectedItem.image} alt="" />
+
+          <div>
+            <h2>{selectedItem.title}</h2>
+            <p className="price">${selectedItem.price}</p>
+            <p>{selectedItem.description}</p>
+
+            <button onClick={() => addToCart(selectedItem)}>
+              Add To Cart
+            </button>
+
+            <button
+              className="back"
+              onClick={() => setSelectedItem(null)}
+            >
+              Back
+            </button>
+          </div>
+
+        </div>
+
+      ) : (
+
+        <div className="product-grid">
+
+          {filteredData.map((item) => (
+
+            <div key={item.id} className="product-card">
+
+              <img
+                src={item.image}
+                alt=""
+                className="product-img"
+                onClick={() => setSelectedItem(item)}
+              />
+
+              <h4>{item.title}</h4>
+              <p className="price">${item.price}</p>
+
+              <div className="card-buttons">
+
+                {/* ✅ FIXED */}
+                <button onClick={() => addToCart(item)}>
+                  Add To Cart
+                </button>
+
+                <button onClick={() => setSelectedItem(item)}>
+                  View
+                </button>
+
+              </div>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      )}
+
     </div>
-  </div>
-  </div>  
-  )
-}
+  );
+};
+
 export default App;
+
+// import React from "react";
+// import Count from "./Count";
+// import Increment from "./Increment";
+// import Decrement from "./Decrement";
+// import Reset from "./Reset";
+// function App(){
+//   return(
+//     <div>
+//       <Count/>
+//       <Increment/>
+//       <Decrement/>
+//       <Reset/>
+//     </div>
+//   )
+// }
+// export default App;

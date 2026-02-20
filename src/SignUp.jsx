@@ -5,72 +5,72 @@
 // import { ToastContainer, toast } from "react-toastify";
 // import "./App.css"
 // import { useNavigate } from 'react-router'
-import React, { useState } from 'react'
-import {ToastContainer,toast} from "react-toastify"
+// import React, { useState } from 'react'
+// import {ToastContainer,toast} from "react-toastify"
 
-import "./App.css"
-import { useNavigate } from 'react-router'
+// import "./App.css"
+// import { useNavigate } from 'react-router'
 
-function SignUp(){
-    var [name,setName] = useState("")
-    var [email,setEmail] = useState("")
-    var [number,setNumber] = useState("")
-    var [password,setPassword] = useState("")
-    var navigate = useNavigate()
+// function SignUp(){
+//     var [name,setName] = useState("")
+//     var [email,setEmail] = useState("")
+//     var [number,setNumber] = useState("")
+//     var [password,setPassword] = useState("")
+//     var navigate = useNavigate()
 
 
-    function handleForm(e){
-        e.preventDefault()
-        if(name === "" || email == "" || number == "" || password == ""){
-           toast.error("fill all the feilds")
-        }else{
-            if(name == "ananth" && email == "ananth" && password == "ananth" && number == "ananth"){
-                toast.success("login done")
-                setTimeout(() => {
-                    navigate("/home")
+//     function handleForm(e){
+//         e.preventDefault()
+//         if(name === "" || email == "" || number == "" || password == ""){
+//            toast.error("fill all the feilds")
+//         }else{
+//             if(name == "ananth" && email == "ananth" && password == "ananth" && number == "ananth"){
+//                 toast.success("login done")
+//                 setTimeout(() => {
+//                     navigate("/home")
                     
-                }, 1000);
-                  setName("")
-                  setEmail("")
-                  setNumber("")
-                  setPassword("")
-            }else{
-                toast.warn("invalid details")
-                setName("")
-                setEmail("")
-                setNumber("")
-                setPassword("")
-            }
+//                 }, 1000);
+//                   setName("")
+//                   setEmail("")
+//                   setNumber("")
+//                   setPassword("")
+//             }else{
+//                 toast.warn("invalid details")
+//                 setName("")
+//                 setEmail("")
+//                 setNumber("")
+//                 setPassword("")
+//             }
             
-        }
+//         }
 
-    }
+//     }
 
-    function handleLogin(){
-        navigate("/login")
-    }
+//     function handleLogin(){
+//         navigate("/login")
+//     }
 
     
-    return(
-        <div>
-            <ToastContainer/>
-            <form onSubmit={handleForm} action="">
-            <label htmlFor="">Enter Name</label>
-            <input value={name} onChange={(e)=>{setName(e.target.value)}} type="text" />
-            <label htmlFor="">Enter Email</label>
-            <input value={email} onChange={(e)=>{setEmail(e.target.value)}} type="text" />
-            <label htmlFor="">Enter Number</label>
-            <input value={number} onChange={(e)=>{setNumber(e.target.value)}} type="text" />
-            <label htmlFor="">Enter Password</label>
-            <input value={password} onChange={(e)=>{setPassword(e.target.value)}} type="text" />
-            <button type='submit'>submit</button>
+//     return(
+//         <div>
+//             <ToastContainer/>
+//             <form onSubmit={handleForm} action="">
+//             <label htmlFor="">Enter Name</label>
+//             <input value={name} onChange={(e)=>{setName(e.target.value)}} type="text" />
+//             <label htmlFor="">Enter Email</label>
+//             <input value={email} onChange={(e)=>{setEmail(e.target.value)}} type="text" />
+//             <label htmlFor="">Enter Number</label>
+//             <input value={number} onChange={(e)=>{setNumber(e.target.value)}} type="text" />
+//             <label htmlFor="">Enter Password</label>
+//             <input value={password} onChange={(e)=>{setPassword(e.target.value)}} type="text" />
+//             <button type='submit'>submit</button>
            
-            </form>
-            <button onClick={handleLogin}>Login if account exists</button>
+//             </form>
+//             <button onClick={handleLogin}>Login if account exists</button>
 
-        </div>
-    )
-}
+//         </div>
+//     )
+// }
 
 
 // const SignUp = () =>{
@@ -158,4 +158,4 @@ function SignUp(){
 //         </div>
 //     )
 // }
-export default SignUp;
+// export default SignUp;
