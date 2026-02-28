@@ -1295,242 +1295,242 @@ export default App; */}
 //   )
 // }
 // export default App;
-import React, { useEffect, useState } from "react";
-import { FaShoppingCart, FaSearch, FaUser } from "react-icons/fa";
-import AuthPage from "./AuthPage";
-import "./App.css";
+// import React, { useEffect, useState } from "react";
+// import { FaShoppingCart, FaSearch, FaUser } from "react-icons/fa";
+// import AuthPage from "./AuthPage";
+// import "./App.css";
 
-const App = () => {
+// const App = () => {
 
   // ================= AUTH =================
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // ================= STATES =================
-  const [data, setData] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [search, setSearch] = useState("");
-  const [cart, setCart] = useState([]);
-  const [showCart, setShowCart] = useState(false);
+  // const [data, setData] = useState([]);
+  // const [selectedItem, setSelectedItem] = useState(null);
+  // const [search, setSearch] = useState("");
+  // const [cart, setCart] = useState([]);
+  // const [showCart, setShowCart] = useState(false);
 
   // ================= FETCH DATA =================
-  async function fetchData() {
-    const res = await fetch("https://fakestoreapi.com/products");
-    const json = await res.json();
-    setData(json);
-  }
+  // async function fetchData() {
+  //   const res = await fetch("https://fakestoreapi.com/products");
+  //   const json = await res.json();
+  //   setData(json);
+  // }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   // ================= CART =================
-  function addToCart(product) {
-    setCart([...cart, product]);
-  }
+  // function addToCart(product) {
+  //   setCart([...cart, product]);
+  // }
 
-  function removeFromCart(id) {
-    const updated = cart.filter((item) => item.id !== id);
-    setCart(updated);
-  }
+  // function removeFromCart(id) {
+  //   const updated = cart.filter((item) => item.id !== id);
+  //   setCart(updated);
+  // }
 
   // ================= SEARCH =================
-  const filteredData = data.filter((item) =>
-    item.title.toLowerCase().includes(search.toLowerCase())
-  );
+  // const filteredData = data.filter((item) =>
+  //   item.title.toLowerCase().includes(search.toLowerCase())
+  // );
 
   // ================= TOTAL =================
-  const totalPrice = cart.reduce((acc, item) => acc + item.price, 0);
+  // const totalPrice = cart.reduce((acc, item) => acc + item.price, 0);
 
   // ================= AUTH CHECK =================
-  if (!isAuthenticated) {
-    return <AuthPage setIsAuthenticated={setIsAuthenticated} />;
-  }
+  // if (!isAuthenticated) {
+  //   return <AuthPage setIsAuthenticated={setIsAuthenticated} />;
+  // }
 
   // ================= UI =================
-  return (
-    <div className="app">
+  // return (
+  //   <div className="app">
 
       {/* ================= HEADER ================= */}
-      <header className="header">
+      {/* <header className="header">
 
         <h2 className="logo">MyStore</h2>
 
         <div className="header-right">
 
           {/* SEARCH */}
-          <div className="search-box">
-            <FaSearch />
-            <input
-              value={search}
-              type="text"
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search products..."
-            />
-          </div>
+          // <div className="search-box">
+          //   <FaSearch />
+          //   <input
+          //     value={search}
+          //     type="text"
+          //     onChange={(e) => setSearch(e.target.value)}
+          //     placeholder="Search products..."
+          //   />
+          // </div>
 
           {/* ACCOUNT DROPDOWN */}
-          <div className="account-box">
+          // <div className="account-box">
 
-            <div className="account-text">
-              <span className="small">Hello, sign in</span>
-              <span className="bold">Account & Lists ▾</span>
-            </div>
+          //   <div className="account-text">
+          //     <span className="small">Hello, sign in</span>
+          //     <span className="bold">Account & Lists ▾</span>
+          //   </div>
 
-            <div className="dropdown">
-              <button className="signin-btn">Sign In</button>
+          //   <div className="dropdown">
+          //     <button className="signin-btn">Sign In</button>
 
-              <div className="dropdown-content">
-                <div>
-                  <h4>Your Lists</h4>
-                  <p>Create a Wish List</p>
-                  <p>Baby Wishlist</p>
-                  <p>Discover your style</p>
-                </div>
+          //     <div className="dropdown-content">
+          //       <div>
+          //         <h4>Your Lists</h4>
+          //         <p>Create a Wish List</p>
+          //         <p>Baby Wishlist</p>
+          //         <p>Discover your style</p>
+          //       </div>
 
-                <div>
-                  <h4>Your Account</h4>
-                  <p>Your Orders</p>
-                  <p>Your Wishlist</p>
-                  <p>Your Recommendations</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          //       <div>
+          //         <h4>Your Account</h4>
+          //         <p>Your Orders</p>
+          //         <p>Your Wishlist</p>
+          //         <p>Your Recommendations</p>
+          //       </div>
+          //     </div>
+          //   </div>
+          // </div>
 
           {/* ORDERS */}
-          <div className="nav-item">
-            <p className="small">Returns</p>
-            <p className="bold">& Orders</p>
-          </div>
+          // <div className="nav-item">
+          //   <p className="small">Returns</p>
+          //   <p className="bold">& Orders</p>
+          // </div>
 
           {/* CART */}
-          <button
-            className="cart-btn"
-            onClick={() => setShowCart(true)}
-          >
-            <FaShoppingCart /> Cart ({cart.length})
-          </button>
+          // <button
+          //   className="cart-btn"
+          //   onClick={() => setShowCart(true)}
+          // >
+          //   <FaShoppingCart /> Cart ({cart.length})
+          // </button>
 
           {/* USER ICON */}
-          <button className="user-btn">
-            <FaUser />
-          </button>
+      //     <button className="user-btn">
+      //       <FaUser />
+      //     </button>
 
-        </div>
-      </header>
+      //   </div>
+      // </header>
 
       {/* ================= CART MODAL ================= */}
-      {showCart && (
-        <div className="overlay" onClick={() => setShowCart(false)}>
+      // {showCart && (
+      //   <div className="overlay" onClick={() => setShowCart(false)}>
 
-          <div
-            className="cart-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2>Shopping Cart</h2>
+      //     <div
+      //       className="cart-modal"
+      //       onClick={(e) => e.stopPropagation()}
+      //     >
+      //       <h2>Shopping Cart</h2>
 
-            {cart.length === 0 ? (
-              <p>No items in cart</p>
-            ) : (
-              <>
-                {cart.map((item) => (
-                  <div key={item.id} className="cart-item">
-                    <p>{item.title}</p>
-                    <span>${item.price}</span>
+      //       {cart.length === 0 ? (
+      //         <p>No items in cart</p>
+      //       ) : (
+      //         <>
+      //           {cart.map((item) => (
+      //             <div key={item.id} className="cart-item">
+      //               <p>{item.title}</p>
+      //               <span>${item.price}</span>
 
-                    <button onClick={() => removeFromCart(item.id)}>
-                      Remove
-                    </button>
-                  </div>
-                ))}
+      //               <button onClick={() => removeFromCart(item.id)}>
+      //                 Remove
+      //               </button>
+      //             </div>
+      //           ))}
 
-                <h3>Total: ${totalPrice.toFixed(2)}</h3>
-              </>
-            )}
+      //           <h3>Total: ${totalPrice.toFixed(2)}</h3>
+      //         </>
+      //       )}
 
-            <div className="cart-actions">
-              <button onClick={() => setShowCart(false)}>
-                Close
-              </button>
+      //       <div className="cart-actions">
+      //         <button onClick={() => setShowCart(false)}>
+      //           Close
+      //         </button>
 
-              <button className="checkout-btn">
-                Checkout
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      //         <button className="checkout-btn">
+      //           Checkout
+      //         </button>
+      //       </div>
+      //     </div>
+      //   </div>
+      // )}
 
       {/* ================= PRODUCT SECTION ================= */}
-      {selectedItem ? (
+      // {selectedItem ? (
 
-        <div className="product-details">
+      //   <div className="product-details">
 
-          <img src={selectedItem.image} alt="" />
+      //     <img src={selectedItem.image} alt="" />
 
-          <div>
-            <h2>{selectedItem.title}</h2>
-            <p className="price">${selectedItem.price}</p>
-            <p>{selectedItem.description}</p>
+      //     <div>
+      //       <h2>{selectedItem.title}</h2>
+      //       <p className="price">${selectedItem.price}</p>
+      //       <p>{selectedItem.description}</p>
 
-            <button onClick={() => addToCart(selectedItem)}>
-              Add To Cart
-            </button>
+      //       <button onClick={() => addToCart(selectedItem)}>
+      //         Add To Cart
+      //       </button>
 
-            <button
-              className="back"
-              onClick={() => setSelectedItem(null)}
-            >
-              Back
-            </button>
-          </div>
+      //       <button
+      //         className="back"
+      //         onClick={() => setSelectedItem(null)}
+      //       >
+      //         Back
+      //       </button>
+      //     </div>
 
-        </div>
+      //   </div>
 
-      ) : (
+      // ) : (
 
-        <div className="product-grid">
+      //   <div className="product-grid">
 
-          {filteredData.map((item) => (
+      //     {filteredData.map((item) => (
 
-            <div key={item.id} className="product-card">
+      //       <div key={item.id} className="product-card">
 
-              <img
-                src={item.image}
-                alt=""
-                className="product-img"
-                onClick={() => setSelectedItem(item)}
-              />
+      //         <img
+      //           src={item.image}
+      //           alt=""
+      //           className="product-img"
+      //           onClick={() => setSelectedItem(item)}
+      //         />
 
-              <h4>{item.title}</h4>
-              <p className="price">${item.price}</p>
+      //         <h4>{item.title}</h4>
+      //         <p className="price">${item.price}</p>
 
-              <div className="card-buttons">
+      //         <div className="card-buttons">
 
                 {/* ✅ FIXED */}
-                <button onClick={() => addToCart(item)}>
-                  Add To Cart
-                </button>
+//                 <button onClick={() => addToCart(item)}>
+//                   Add To Cart
+//                 </button>
 
-                <button onClick={() => setSelectedItem(item)}>
-                  View
-                </button>
+//                 <button onClick={() => setSelectedItem(item)}>
+//                   View
+//                 </button>
 
-              </div>
+//               </div>
 
-            </div>
+//             </div>
 
-          ))}
+//           ))}
 
-        </div>
+//         </div>
 
-      )}
+//       )}
 
-    </div>
-  );
-};
+//     </div>
+//   );
+// };
 
-export default App;
+// export default App; */}
 
 // import React from "react";
 // import Count from "./Count";
@@ -1548,3 +1548,47 @@ export default App;
 //   )
 // }
 // export default App;
+
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import LoginUi from "./Ui/LoginUi";
+import ProductsUi from "./Ui/ProductUi";
+import CartUi from "./Ui/CartUi";
+import WishlistUi from "./Ui/WishlistUi";
+import ProfileUi from "./Ui/ProfileUi";
+import Checkout from "./Ui/Checkout";
+import Orders from "./Ui/OrdersUi";
+
+// ✅ ADD THESE IMPORTS
+import AddressUi from "./Ui/AddressUi";
+import PaymentUi from "./Ui/PaymentUi";
+import OtpUi from "./Ui/OtpUi";
+import TrackingUi from "./Ui/TrackingUi";
+
+import "./App.css";
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginUi />} />
+
+        <Route path="/products" element={<ProductsUi />} />
+        <Route path="/cart" element={<CartUi />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/wishlist" element={<WishlistUi />} />
+        <Route path="/profile" element={<ProfileUi />} />
+
+        {/* ✅ NEW FLOW */}
+        <Route path="/address" element={<AddressUi />} />
+        <Route path="/payment" element={<PaymentUi />} />
+        <Route path="/otp" element={<OtpUi />} />
+        <Route path="/tracking" element={<TrackingUi />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default App;
